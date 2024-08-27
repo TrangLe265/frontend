@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Conditional Rendering Exercise</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js".
+    //babel is a JS compiler which takes ur code turn it into an
+    older JS version that all browsers can understand -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+
+    <!-- Create a component that get one props called text.
+If the length of text props value is 5 or less, the component shows the value of text props. Otherwise it shows text ’Too long’.
+Note! Use conditional rendering -->
+    <script type="text/babel"> 
+        
+        function ConditionalRendering(props){
+            const {text} = props; 
+
+            if (text.length === 0){
+                return <p>Invalid input</p>
+            } else {
+                if (text && text.length <= 5) {
+                    return <p>{text}</p> 
+                } 
+                else {
+                    return <p>Too long </p>     
+            }
+            }
+            ; 
+
+        }
+
+        const userInput = window.prompt('Enter text');
+
+        const root = ReactDOM.createRoot(document.getElementById("root")); 
+        root.render(<ConditionalRendering text={userInput} />)
+    </script>
+  </body>
+</html>
