@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Front End Programming/ React</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+        <script type="text/babel">
+
+            function WeatherOnDemand() {
+                const [location, setLocation] = React.useState(''); //inintially default values is zero
+                const [data, setData] = React.useState({}); 
+
+                const handleChange = (event) => {
+                    setLocation(event.target.value);
+                }
+
+                
+                const fetchData = () => {
+                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=1e9bf3529941549651ff1d5ec3547eac&units=metric`)
+                    .then(response => {
+                        if (!response.ok)
+                        throw new Error("Something went wrong: " + response.statusText); 
+                        return response.json(); 
+                    })
+                    .then(responseData => setData(responseData))
+                    .catch(error => console.error(error))
+                }; 
+
+            
+                return (
+                    <React.Fragment>
+                        <h1>Local weather</h1>
+                        <input type="text" value={location} onChange={handleChange}/> 
+                        <button type="button" onClick = {fetchData}>Get Weather</button>
+                        {data.main ? (
+                            <div>
+                                <h1>{location} weather</h1>
+                                <p>Temperature: {data.main.temp} Celcius </p>
+                                <p> Weather: {data.weather[0].description} </p> 
+                                <img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather icon" />
+                            </div> 
+                        ) : (
+                            <p>Enter a valid city</p>
+                        )
+                        }
+                    </React.Fragment>
+                )
+            }
+
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render( < WeatherOnDemand /> )
+        </script>
+    </body>
+</html>

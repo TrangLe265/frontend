@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Programming / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id = "result"></div>
+    <div id="root"></div>
+    
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js".
+    //babel is a JS compiler which takes ur code turn it into an
+    older JS version that all browsers can understand -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+
+    <!-- React component code -->
+    <script type="text/babel"> 
+
+    function EnterAge() {
+        const [person, setPerson] = React.useState({
+            name: "",
+            age: "",
+        }); 
+        
+        const [message, setMessage] = React.useState(); 
+
+        function CheckAge(age,name){
+            if (age < 18){
+                return "You are too young"
+            } else {
+                return "Hello "+ name
+            }
+        }
+
+        const handleAge = () => {
+            const ageInt = parseInt(person.age);
+            const result = CheckAge(ageInt,person.name); 
+            document.getElementById("result").innerHTML = result;
+        }
+
+        
+            return (
+                <React.Fragment>
+                    <p>{handleAge}</p>
+                    
+                    <p>Name:  
+                        <input
+                        placeholder ="Enter name"
+                        value = {person.name}
+                        onChange = {event => setPerson({...person, name:event.target.value})}
+                        />
+                    </p>
+                    
+                
+                    <p>Age: 
+                        <input
+                        placeholder= "Enter age"
+                        value = {person.age}
+                        onChange = {event => setPerson({...person,age: event.target.value})}
+                        />
+                    </p>
+
+                    <button onClick = {handleAge}>Submit</button>
+    
+                </React.Fragment>
+            )
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<EnterAge/>);
+    </script>
+    </body>
+
+</html>
