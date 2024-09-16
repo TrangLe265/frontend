@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Programming / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js".
+    //babel is a JS compiler which takes ur code turn it into an
+    older JS version that all browsers can understand -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+
+    <!-- React component code -->
+    <script type="text/babel"> 
+        
+        function HelloComponent(props){
+            const [question, setQuestion] = React.useState("Press the button to generate question"); 
+
+            function fetchData() {
+                fetch("https://opentdb.com/api.php?amount=1")
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error ("Sonething went wrong " + response.statusText)
+                        } else {
+                            return response.json();//handle 
+                        }
+                    })  
+                    .then(data => setQuestion(data.results[0].question))//process response
+                    .catch(error => console.log(error));
+        }; 
+
+            React.useEffect(() => {fetchData()}, []); 
+
+            return (
+                <React.Fragment>
+                    <h3>Trivia question</h3>
+                    <p>{question}</p>
+                    <button onClick ={() => fetchData}>New question</button>
+                </React.Fragment>
+            ); 
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root")); 
+        root.render(<HelloComponent firstname="Trang" lastname= "Le" />)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Programming / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+
+    <!-- React component code -->
+    <script type="text/babel"> 
+
+        function TriviaFetch(){
+            const [trivia, setTrivia] = React.useState({}); 
+            const [answer, setAnswer] = React.useState(false); 
+
+            const fetchData = () => {
+                fetch("https://opentdb.com/api.php?amount=1")
+                    .then( response => {
+                        if(!response.ok){
+                            throw new Error("Something went wrong " + response.statusText); 
+                        } else {
+                            return response.json()
+                        }
+                    })
+                    .then(data => setTrivia(data.results[0], setAnswer(false)))
+                    .catch(error => console.log(error))
+            }
+
+            const showAnswer = () => {
+                setAnswer(true);
+            }
+            
+            React.useEffect(() => {fetchData()}, []); 
+
+            return (
+                <React.Fragment>
+                    <p>{trivia.question}</p>
+                    <button onClick = {fetchData}>New Question</button>
+                    <button onClick= {showAnswer}>Show answer</button>
+                    {answer ? <p>{trivia.correct_answer}</p> : null}
+                    
+                </React.Fragment>
+            ); 
+        }
+
+       const root = ReactDOM.createRoot(document.getElementById("root")); 
+    
+       root.render(<TriviaFetch/>)
+    </script>
+    
+  </body>
+  </html>

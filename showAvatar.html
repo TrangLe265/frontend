@@ -12,48 +12,44 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
 
-
-    <!-- React component code -->
     <script type="text/babel">
 
-        function showAvatar() {
-            const [listItems, setListItems] = React.useState([]);
-
-            React.useEffect(() => {
-            fetch('https://reqres.in/api/users')
-            .then(response => { 
-                if (!response.ok)
-                throw new Error("Error in fetch: " + response.statusText);  
-                
-                return response.json();
-            }) 
-            .then(responseData => { 
-                setListItems(responseData.data)
-            }) 
-            .catch(err => console.error(err)
-            }, [])
-            const [listItems, setListItems] = React.useState([]);
+      function ShowAvatar(){
         
-            return (
-                <div>
-                    <h2>Persons</h2>
-                    <table>
-                    <tbody>
-                        <tr><th>First name</th><th>Last name</th><th>Email</th></tr>
-                        { listItems.map((person) => 
-                            <tr key={person.id}>
-                            <td>{person.first_name}</td>
-                            <td>{person.last_name}</td>
-                            <td>{person.email}</td>
-                            </tr>) }
-                    </tbody>
-                    </table>
-                </div>
-                );
+        const [persons, setPersons] = React.useState([]); 
+        
+        const handleFetch = () => {
+          console.log("fetching data")
+          fetch("https://reqres.in/api/users")
+          .then (response => {
+            if(!response.ok)
+              throw new Error("Something went wrong " + response.statusText)
+              return response.json()
+          })
+          .then (responseData => setPersons(responseData.data))
+          .catch(err => console.log(err))
         }
 
+        React.useEffect(() => {
+          handleFetch();
+        }, []);
+
+        return (
+          <React.Fragment>
+            <h1>Persons</h1>
+            
+            <table>
+              <tbody>
+                <tr><th>First name</th><th>Last name</th><th>Email</th><th>Avatar</th></tr>
+                {persons.map((person) => <tr key={person.id}><td>{person.first_name}</td><td>{person.last_name}</td><td>{person.email}</td><td><img src={person.avatar} alt="avatar"/></td></tr>) } 
+              </tbody>
+            </table>
+          </React.Fragment>
+        )
+      } 
+
         const root = ReactDOM.createRoot(document.getElementById("root")); 
-        root.render(<showAvatar/>)
+        root.render(<ShowAvatar/>)
     </script>
   </body>
 </html>
