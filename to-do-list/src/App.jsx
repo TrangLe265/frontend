@@ -2,13 +2,14 @@ import { Container, CssBaseline } from '@mui/material'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Todolist from './components/ToDoList'
+import TabNavMUI from './components/Home';
+
 
 
 function App() {
   
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" >
       <CssBaseline />
       <AppBar position='static'>
         <Toolbar>
@@ -17,7 +18,7 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-     < Todolist />
+     <TabNavMUI />
     </Container>
   )
 }
