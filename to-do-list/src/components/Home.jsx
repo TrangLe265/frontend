@@ -19,16 +19,16 @@ export default function TabNavMUI(){
     }; 
 
     return (
-        <Box sx={{ width: '100%'}}>
+        <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
             <Tabs value={value} onChange={handleChange} centered>
-                <Tab label="Home" />
-                <Tab label="ToDo List" />
+                <Tab label="Home" value={0} />
+                <Tab label="ToDo List" value={1} />
             </Tabs>
 
             <Box sx={{ mt: 2 }}>
-        {value === 0 && <Home />}
-        {value === 1 && <Todolist />}
-      </Box>
+                {value === 0 && <Home />}
+                {value === 1 && <Todolist />}
+            </Box>
         </Box>
     )
 
