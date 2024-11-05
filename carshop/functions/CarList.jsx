@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect} from 'react'; 
 import Button from '@mui/material/Button'; 
 import Snackbar from '@mui/material/Snackbar';
-import {fetchCars} from '/carapi'; 
+import {fetchCars} from './carapi'; 
 import { deleteCar } from './carapi';
 import AddCar from './AddCar';
 import EditCar from './EditCar';
